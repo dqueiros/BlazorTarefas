@@ -1,0 +1,69 @@
+﻿@page "/tarefas"
+@rendermode InteractiveServer
+
+<h1>Lista de Tarefas</h1>
+<h5>
+    Usando <b>rendermode InteractiveServer</b>
+</h5>
+<br />
+
+@if (tarefas == null)
+{
+    <img src="https://media.giphy.com/media/qHOf8vC1ppFQs/giphy.gif" width="100" class="icone-carregando" />
+    <p>Carregando tarefas...</p>
+}
+else if(!tarefas.Any())
+{
+    <img src="icons/erro-404.png" class="icone-carregando" />
+    <p>Ainda não existem tarefas...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ação</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Concluída</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in tarefas)
+            {
+                <tr>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="() => RemoverTarefa(item.ID)"><i class="bi bi-trash"></i> Remover</button>
+                    </td>
+                    <td>@item.DataCriacao.ToShortDateString()</td>
+                    <td>@item.Descricao</td>
+                    <td>
+                        <input type="checkbox" checked="@item.Concluida" @onchange="() => AlternarConclusao(item.ID)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    private List<Tarefa>? tarefas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        tarefas = TarefaDados.ObterTarefas();
+    }
+    private void RemoverTarefa(Guid id)
+    {
+        tarefas?.RemoveAll(t => t.ID == id);
+    }
+    private void AlternarConclusao(Guid id)
+    {
+        var tarefa = tarefas?.FirstOrDefault(t => t.ID == id);
+
+        if (tarefa != null)
+            tarefa.Concluida = !tarefa.Concluida;
+    }
+}
