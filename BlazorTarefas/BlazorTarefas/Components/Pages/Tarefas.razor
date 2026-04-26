@@ -3,6 +3,11 @@
 @page "/lista"
 @rendermode InteractiveServer
 
+<button class="btn btn-link mb-3" @onclick="IrParaResumo">
+    <i class="bi bi-bar-chart-line"></i>
+    Ver resumo
+</button>
+
 <h1>Lista de Tarefas</h1>
 <h5>
     Usando <b>rendermode InteractiveServer</b>
@@ -55,6 +60,9 @@ else
     [Parameter]
     public string? Status { get; set; }
 
+    [Inject]
+    private NavigationManager Nav { get; set; } = default!;
+
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(2000);
@@ -79,5 +87,9 @@ else
 
         if (tarefa != null)
             tarefa.Concluida = !tarefa.Concluida;
+    }
+    private void IrParaResumo()
+    {
+        Nav.NavigateTo("/tarefas-resumo");
     }
 }
