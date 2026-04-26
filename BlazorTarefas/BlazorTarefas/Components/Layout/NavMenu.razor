@@ -32,6 +32,25 @@
             </NavLink>
         </div>
 
+        <!-- Tarefas pendentes -->
+        <div class="nav-item ms-4">
+            @* margem‑start adicional *@
+            <NavLink class="nav-link text-warning"
+                     href="tarefas/pendentes"
+                     Match="NavLinkMatch.All">
+                <i class="bi bi-hourglass-split"></i> Pendentes
+            </NavLink>
+        </div>
+
+        <!-- Tarefas concluídas -->
+        <div class="nav-item ms-4">
+            <NavLink class="nav-link text-success"
+                     href="tarefas/concluidas"
+                     Match="NavLinkMatch.All">
+                <i class="bi bi-check-circle"></i> Concluídas
+            </NavLink>
+        </div>
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="tarefas-resumo">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Resumo (Wasm)
